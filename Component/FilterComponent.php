@@ -23,6 +23,14 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 abstract class FilterComponent
 {
     /**
+     * The block name from the form.
+     * Used to generate the query string.
+     *
+     * @var string
+     */
+    const FORM_BLOCK_NAME = 'filter';
+
+    /**
      * @var RequestStack
      */
     protected $request;
@@ -50,14 +58,6 @@ abstract class FilterComponent
      * @var string
      */
     protected $formType = FormType::class;
-
-    /**
-     * The block name from the form.
-     * Used to generate the query string.
-     *
-     * @var string
-     */
-    protected $formBlockName = 'filter';
 
     /**
      * @var PaginatorInterface
@@ -205,8 +205,8 @@ abstract class FilterComponent
         $page = $this->getSession('page');
 
         $queryData = [
-            $this->formBlockName => $filters,
-            'page'               => $page,
+            self::FORM_BLOCK_NAME => $filters,
+            'page'                => $page,
         ];
 
         return http_build_query($queryData);

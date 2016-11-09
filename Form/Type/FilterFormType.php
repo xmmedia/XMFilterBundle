@@ -11,6 +11,7 @@ namespace XM\FilterBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use XM\FilterBundle\Component\FilterComponent;
 
 /**
  * Provides some defaults for a list filter form.
@@ -39,6 +40,6 @@ class FilterFormType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'filter';
+        return FilterComponent::FORM_BLOCK_NAME;
     }
 }
