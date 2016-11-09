@@ -1,0 +1,21 @@
+{
+    "name": "xm/filter-bundle",
+    "description": "Provides a base for a service to help creating a filter form and record list.",
+    "type": "symfony-bundle",
+    "homepage": "https://github.com/xmmedia/XMFilterBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Darryl Hein",
+            "email": "dhein@xmmedia.com"
+        }
+    ],
+    "require": {
+        "php": "^5.6 || ^7.0",
+        "symfony/form": "^2.8 || ^3.0",
+        "symfony/framework-bundle": "^2.8 || ^3.0",
+    },
+    "autoload": {
+        "psr-4": { "XM\\FilterBunlde\\": "" }
+    }
+}
