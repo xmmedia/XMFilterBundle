@@ -18,7 +18,7 @@
         "knplabs/knp-paginator-bundle": "^2.5"
     },
     "autoload": {
-        "psr-4": { "XM\\FilterBunlde\\": "" },
+        "psr-4": { "XM\\FilterBundle\\": "" },
         "exclude-from-classmap": [
             "/Tests/"
         ]
