@@ -52,6 +52,14 @@ abstract class FilterComponent
     protected $formType = FormType::class;
 
     /**
+     * The block name from the form.
+     * Used to generate the query string.
+     *
+     * @var string
+     */
+    protected $formBlockName = 'filter';
+
+    /**
      * @var PaginatorInterface
      */
     protected $paginator;
@@ -197,8 +205,8 @@ abstract class FilterComponent
         $page = $this->getSession('page');
 
         $queryData = [
-            'form' => $filters,
-            'page' => $page,
+            $this->formBlockName => $filters,
+            'page'               => $page,
         ];
 
         return http_build_query($queryData);
