@@ -189,7 +189,11 @@ abstract class FilterComponent
      */
     public function pageFromQuery()
     {
-        $page = $this->request->query->getInt('page');
+        if ($this->request) {
+            $page = $this->request->query->getInt('page');
+        } else {
+            $page = 0;
+        }
 
         return ($page > 0) ? $page : 1;
     }
@@ -222,7 +226,9 @@ abstract class FilterComponent
         $defaults = $this->filterDefaults();
 
         $this->form = $this->formFactory->create($this->formType, $defaults);
-        $this->form->handleRequest($this->request);
+        if ($this->request) {
+            $this->form->handleRequest($this->request);
+        }
 
         return $this->form;
     }
