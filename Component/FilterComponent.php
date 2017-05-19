@@ -219,13 +219,18 @@ abstract class FilterComponent
     /**
      * Creates the filter form and pulls the filter values from request.
      *
+     * @param array $formOptions Options to pass to the form.
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createForm()
+    public function createForm(array $formOptions = [])
     {
         $defaults = $this->filterDefaults();
 
-        $this->form = $this->formFactory->create($this->formType, $defaults);
+        $this->form = $this->formFactory->create(
+            $this->formType,
+            $defaults,
+            $formOptions
+        );
         if ($this->request) {
             $this->form->handleRequest($this->request);
         }
