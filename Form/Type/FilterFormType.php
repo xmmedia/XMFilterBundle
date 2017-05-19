@@ -26,9 +26,9 @@ class FilterFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'method' => 'GET',
+            'method'          => 'GET',
             'csrf_protection' => false,
-            'attr' => ['novalidate' => 'novalidate'],
+            'attr'            => ['novalidate' => 'novalidate'],
         ]);
     }
 
