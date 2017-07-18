@@ -9,6 +9,7 @@
 
 namespace XM\FilterBundle\Component;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -205,15 +206,36 @@ abstract class FilterComponent
      */
     public function query()
     {
-        $filters = $this->getSession('filters');
-        $page = $this->getSession('page');
-
         $queryData = [
-            self::FORM_BLOCK_NAME => $filters,
-            'page'                => $page,
+            self::FORM_BLOCK_NAME => $this->getFiltersAsArray(),
+            'page'                => $this->getSession('page'),
         ];
 
         return http_build_query($queryData);
+    }
+
+    /**
+     * Retrieves the filters from the session as an array,
+     * possibly multi dimensional.
+     * It will try to
+     *
+     * @return array
+     */
+    protected function getFiltersAsArray()
+    {
+        $filters = $this->getSession('filters');
+
+        foreach ($filters as $key => $value) {
+            if ($value instanceof ArrayCollection) {
+                $filters[$key] = $filters[$key]->map(function ($entity) {
+                    return $entity->getId();
+                })->toArray();
+            } else if (is_object($value) && method_exists($value, 'getId')) {
+                $filters[$key] = $value->getId();
+            }
+        }
+
+        return $filters;
     }
 
     /**
