@@ -227,15 +227,38 @@ abstract class FilterComponent
 
         foreach ($filters as $key => $value) {
             if ($value instanceof ArrayCollection) {
-                $filters[$key] = $filters[$key]->map(function ($entity) {
-                    return $entity->getId();
-                })->toArray();
-            } else if (is_object($value) && method_exists($value, 'getId')) {
+                $filters[$key] = $filters[$key]->map(
+                    function ($entity) {
+                        return $entity->getId();
+                    }
+                )->toArray();
+
+            } else if (is_array($value)) {
+                foreach ($value as $_key => $_value) {
+                    if ($this->filterIsEntity($_value)) {
+                        $filters[$key][$_key] = $_value->getId();
+                    }
+                }
+
+            } else if ($this->filterIsEntity($value)) {
                 $filters[$key] = $value->getId();
             }
         }
 
         return $filters;
+    }
+
+    /**
+     * True when the value is an entity.
+     * This means it's an object and has a method `getId()`.
+     *
+     * @param mixed $value
+     *
+     * @return bool
+     */
+    protected function filterIsEntity($value)
+    {
+        return (is_object($value) && method_exists($value, 'getId'));
     }
 
     /**
